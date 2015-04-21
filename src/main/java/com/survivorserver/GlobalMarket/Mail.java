@@ -1,5 +1,7 @@
 package com.survivorserver.GlobalMarket;
 
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import com.survivorserver.GlobalMarket.Interface.IMarketItem;
@@ -55,6 +57,10 @@ public class Mail implements IMarketItem {
 
     public String getOwner() {
         return owner;
+    }
+
+    public OfflinePlayer getOwnerPlayer(){
+        return Market.market.getServer().getOfflinePlayer(owner);
     }
 
     public double getPickup() {

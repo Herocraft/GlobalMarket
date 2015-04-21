@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import com.survivorserver.GlobalMarket.Interface.IMarketItem;
@@ -62,6 +64,10 @@ public class Listing implements IMarketItem, Comparable<Listing> {
 
     public String getSeller() {
         return seller;
+    }
+
+    public OfflinePlayer getSellerPlayer(){
+        return Market.market.getServer().getOfflinePlayer(seller);
     }
 
     public double getPrice() {

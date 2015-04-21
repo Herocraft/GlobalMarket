@@ -16,12 +16,7 @@ import com.survivorserver.GlobalMarket.Interface.IHandler;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.configuration.ConfigurationSection;
@@ -289,9 +284,9 @@ public class Market extends JavaPlugin implements Listener {
         return getConfig().getBoolean("announce_new_listings");
     }
 
-    public int getMaxMail(String player, String world) {
+    public int getMaxMail(Player player, String world) {
         for (String  k : getConfig().getConfigurationSection("limits").getKeys(false)) {
-            if (perms.has(world, player, "globalmarket.limits." + k)) {
+            if (perms.playerHas(world, player, "globalmarket.limits." + k)) {
                 return getConfig().getInt("limits." + k + ".max_mail");
             }
         }
@@ -307,9 +302,9 @@ public class Market extends JavaPlugin implements Listener {
         return getConfig().getInt("limits.default.max_mail");
     }
 
-    public double getCut(double amount, String player, String world) {
+    public double getCut(double amount, OfflinePlayer player, String world) {
         for (String  k : getConfig().getConfigurationSection("limits").getKeys(false)) {
-            if (perms.has(world, player, "globalmarket.limits." + k)) {
+            if (perms.playerHas(world, player, "globalmarket.limits." + k)) {
                 if (getConfig().isDouble("limits." + k + ".cut")) {
                     return new BigDecimal(amount * getConfig().getDouble("limits." + k + ".cut")).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
                 } else {
@@ -377,7 +372,7 @@ public class Market extends JavaPlugin implements Listener {
     }
 
 
-    public double getMaxPrice(String player, String world, ItemStack item) {
+    public double getMaxPrice(Player player, String world, ItemStack item) {
         String limitGroup = "default";
         for (String  k : getConfig().getConfigurationSection("limits").getKeys(false)) {
             if (perms.playerHas(world, player, "globalmarket.limits." + k)) {
@@ -422,7 +417,7 @@ public class Market extends JavaPlugin implements Listener {
         return getConfig().getInt("limits.default.queue_trade_time");
     }
 
-    public int getTradeTime(String player, String world) {
+    public int getTradeTime(OfflinePlayer player, String world) {
         if (perms == null) {
             return getConfig().getInt("limits.default.queue_trade_time");
         }
@@ -443,7 +438,7 @@ public class Market extends JavaPlugin implements Listener {
         return getConfig().getInt("limits.default.queue_mail_time");
     }
 
-    public int getMailTime(String player, String world) {
+    public int getMailTime(OfflinePlayer player, String world) {
         if (perms == null) {
             return getConfig().getInt("limits.default.queue_mail_time");
         }
@@ -465,14 +460,14 @@ public class Market extends JavaPlugin implements Listener {
 
     public int maxListings(Player player) {
         for (String  k : getConfig().getConfigurationSection("limits").getKeys(false)) {
-            if (player.hasPermission("globalmarket.limits." + k)) {
+            if(perms.playerHas(player,"globalmarket.limits." + k)){
                 return getConfig().getInt("limits." + k + ".max_listings");
             }
         }
         return getConfig().getInt("limits.default.max_listings");
     }
 
-    public int maxListings(String player, String world) {
+    public int maxListings(Player player, String world) {
         if (perms == null) {
             return getConfig().getInt("limits.default.max_listings");
         }
@@ -484,7 +479,7 @@ public class Market extends JavaPlugin implements Listener {
         return getConfig().getInt("limits.default.max_listings");
     }
 
-    public int getExpireTime(String player, String world) {
+    public int getExpireTime(OfflinePlayer player, String world) {
         if (perms == null) {
             return getConfig().getInt("limits.default.expire_time");
         }

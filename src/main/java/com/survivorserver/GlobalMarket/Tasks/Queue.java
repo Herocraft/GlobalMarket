@@ -29,12 +29,12 @@ public class Queue extends BukkitRunnable {
             public boolean apply(QueueItem item) {
                 if (item.getMail() != null) {
                     Mail mail = item.getMail();
-                    if (((System.currentTimeMillis() - item.getTime()) / 1000) / 60 >= market.getMailTime(mail.getOwner(), mail.getWorld())) {
+                    if (((System.currentTimeMillis() - item.getTime()) / 1000) / 60 >= market.getMailTime(mail.getOwnerPlayer(), mail.getWorld())) {
                         return true;
                     }
                 } else {
                     Listing listing = item.getListing();
-                    if (((System.currentTimeMillis() - item.getTime()) / 1000) / 60 >= market.getTradeTime(listing.getSeller(), listing.getWorld())
+                    if (((System.currentTimeMillis() - item.getTime()) / 1000) / 60 >= market.getTradeTime(listing.getSellerPlayer(), listing.getWorld())
                             && !item.getListing().getSeller().equalsIgnoreCase(market.getInfiniteSeller())) {
                         return true;
                     }

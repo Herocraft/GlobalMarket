@@ -344,14 +344,14 @@ public class InterfaceHandler {
     }
 
     public boolean isAdmin(String name) {
+        Player player = market.getServer().getPlayer(name);
         if (market.getPerms() == null) {
-            Player player = market.getServer().getPlayer(name);
             if (player != null) {
                 return player.hasPermission("globalmarket.admin");
             } else {
                 return false;
             }
         }
-        return market.getPerms().playerHas(market.getServer().getWorlds().get(0).getName(), name, "globalmarket.admin");
+        return market.getPerms().playerHas(market.getServer().getWorlds().get(0).getName(), player, "globalmarket.admin");
     }
 }
