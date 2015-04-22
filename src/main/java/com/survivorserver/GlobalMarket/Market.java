@@ -285,33 +285,17 @@ public class Market extends JavaPlugin implements Listener {
     }
 
     public int getMaxMail(Player player, String world) {
-        for (String  k : getConfig().getConfigurationSection("limits").getKeys(false)) {
-            if (perms.playerHas(world, player, "globalmarket.limits." + k)) {
-                return getConfig().getInt("limits." + k + ".max_mail");
-            }
-        }
+
         return getConfig().getInt("limits.default.max_mail");
     }
 
     public int getMaxMail(Player player) {
-        for (String  k : getConfig().getConfigurationSection("limits").getKeys(false)) {
-            if (player.hasPermission("globalmarket.limits." + k)) {
-                return getConfig().getInt("limits." + k + ".max_mail");
-            }
-        }
+
         return getConfig().getInt("limits.default.max_mail");
     }
 
-    public double getCut(double amount, OfflinePlayer player, String world) {
-        for (String  k : getConfig().getConfigurationSection("limits").getKeys(false)) {
-            if (perms.playerHas(world, player, "globalmarket.limits." + k)) {
-                if (getConfig().isDouble("limits." + k + ".cut")) {
-                    return new BigDecimal(amount * getConfig().getDouble("limits." + k + ".cut")).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-                } else {
-                    return getConfig().getDouble("limits." + k + ".cut");
-                }
-            }
-        }
+    public double getCut(double amount, String player, String world) {
+
         if (getConfig().isDouble("limits.default.cut")) {
             return new BigDecimal(amount * getConfig().getDouble("limits.default.cut")).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
         } else {
@@ -320,15 +304,7 @@ public class Market extends JavaPlugin implements Listener {
     }
 
     public double getCreationFee(Player player, double price) {
-        for (String  k : getConfig().getConfigurationSection("limits").getKeys(false)) {
-            if (player.hasPermission("globalmarket.limits." + k)) {
-                if (getConfig().isDouble("limits." + k + ".creation_fee")) {
-                    return new BigDecimal(price * getConfig().getDouble("limits." + k + ".creation_fee")).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-                } else {
-                    return getConfig().getDouble("limits." + k + ".creation_fee");
-                }
-            }
-        }
+
         if (getConfig().isDouble("limits.default.creation_fee")) {
             return new BigDecimal(price * getConfig().getDouble("limits.default.creation_fee")).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
         } else {
@@ -345,13 +321,9 @@ public class Market extends JavaPlugin implements Listener {
     }
 
     @SuppressWarnings("deprecation")
-    public double getMaxPrice(Player player, ItemStack item) {
+    public double getMaxPrice(String player, ItemStack item) {
         String limitGroup = "default";
-        for (String  k : getConfig().getConfigurationSection("limits").getKeys(false)) {
-            if (player.hasPermission("globalmarket.limits." + k)) {
-                limitGroup = k;
-            }
-        }
+
         String itemPath = "limits." + limitGroup + ".max_item_prices." + item.getType().toString().toLowerCase();
         boolean hasPrice = false;
         if (getConfig().isSet(itemPath)) {
@@ -374,11 +346,7 @@ public class Market extends JavaPlugin implements Listener {
 
     public double getMaxPrice(Player player, String world, ItemStack item) {
         String limitGroup = "default";
-        for (String  k : getConfig().getConfigurationSection("limits").getKeys(false)) {
-            if (perms.playerHas(world, player, "globalmarket.limits." + k)) {
-                limitGroup = k;
-            }
-        }
+
         String itemPath = "limits." + limitGroup + ".max_item_prices." + item.getType().toString().toLowerCase();
         if (getConfig().isSet(itemPath)) {
             int dmg = getConfig().getInt(itemPath + ".dmg");
@@ -408,46 +376,25 @@ public class Market extends JavaPlugin implements Listener {
         }
     }
 
-    public int getTradeTime(Player player) {
-        for (String  k : getConfig().getConfigurationSection("limits").getKeys(false)) {
-            if (player.hasPermission("globalmarket.limits." + k)) {
-                return getConfig().getInt("limits." + k + ".queue_trade_time");
-            }
-        }
+    public int getTradeTime(String player) {
+
         return getConfig().getInt("limits.default.queue_trade_time");
     }
 
-    public int getTradeTime(OfflinePlayer player, String world) {
-        if (perms == null) {
+    public int getTradeTime(String player, String world) {
+
             return getConfig().getInt("limits.default.queue_trade_time");
-        }
-        for (String  k : getConfig().getConfigurationSection("limits").getKeys(false)) {
-            if (perms.playerHas(world, player, "globalmarket.limits." + k)) {
-                return getConfig().getInt("limits." + k + ".queue_trade_time");
-            }
-        }
-        return getConfig().getInt("limits.default.queue_trade_time");
+
     }
 
     public int getMailTime(Player player) {
-        for (String  k : getConfig().getConfigurationSection("limits").getKeys(false)) {
-            if (player.hasPermission("globalmarket.limits." + k)) {
-                return getConfig().getInt("limits." + k + ".queue_mail_time");
-            }
-        }
         return getConfig().getInt("limits.default.queue_mail_time");
     }
 
-    public int getMailTime(OfflinePlayer player, String world) {
-        if (perms == null) {
+    public int getMailTime(String player, String world) {
+
             return getConfig().getInt("limits.default.queue_mail_time");
-        }
-        for (String  k : getConfig().getConfigurationSection("limits").getKeys(false)) {
-            if (perms.playerHas(world, player, "globalmarket.limits." + k)) {
-                return getConfig().getInt("limits." + k + ".queue_mail_time");
-            }
-        }
-        return getConfig().getInt("limits.default.queue_mail_time");
+
     }
 
     public boolean queueOnBuy() {
@@ -459,36 +406,18 @@ public class Market extends JavaPlugin implements Listener {
     }
 
     public int maxListings(Player player) {
-        for (String  k : getConfig().getConfigurationSection("limits").getKeys(false)) {
-            if(perms.playerHas(player,"globalmarket.limits." + k)){
-                return getConfig().getInt("limits." + k + ".max_listings");
-            }
-        }
         return getConfig().getInt("limits.default.max_listings");
     }
 
     public int maxListings(Player player, String world) {
-        if (perms == null) {
-            return getConfig().getInt("limits.default.max_listings");
-        }
-        for (String  k : getConfig().getConfigurationSection("limits").getKeys(false)) {
-            if (perms.playerHas(world, player, "globalmarket.limits." + k)) {
-                return getConfig().getInt("limits." + k + ".max_listings");
-            }
-        }
-        return getConfig().getInt("limits.default.max_listings");
+          return getConfig().getInt("limits.default.max_listings");
+
     }
 
-    public int getExpireTime(OfflinePlayer player, String world) {
-        if (perms == null) {
-            return getConfig().getInt("limits.default.expire_time");
-        }
-        for (String  k : getConfig().getConfigurationSection("limits").getKeys(false)) {
-            if (perms.playerHas(world, player, "globalmarket.limits." + k)) {
-                return getConfig().getInt("limits." + k + ".expire_time");
-            }
-        }
-        return getConfig().getInt("limits.default.expire_time");
+    public int getExpireTime(String player, String world) {
+
+          return getConfig().getInt("limits.default.expire_time");
+
     }
 
     @SuppressWarnings("deprecation")
@@ -623,11 +552,7 @@ public class Market extends JavaPlugin implements Listener {
     }
 
     public boolean allowCreative(Player player) {
-        for (String  k : getConfig().getConfigurationSection("limits").getKeys(false)) {
-            if (player.hasPermission("globalmarket.limits." + k)) {
-                return getConfig().getBoolean("limits." + k + ".allow_creative");
-            }
-        }
+
         return getConfig().getBoolean("limits.default.allow_creative");
     }
 

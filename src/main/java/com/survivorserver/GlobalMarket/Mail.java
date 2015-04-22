@@ -59,9 +59,9 @@ public class Mail implements IMarketItem {
         return owner;
     }
 
-    public OfflinePlayer getOwnerPlayer(){
+  /*  public OfflinePlayer getOwnerPlayer(){
         return Market.market.getServer().getOfflinePlayer(owner);
-    }
+    }*/
 
     public double getPickup() {
         return pickup;

@@ -385,7 +385,7 @@ public class ListingsInterface extends IMenu {
                                     packet.getMessage().display(player, ChatColor.RED + locale.get("price_too_low"), ticks);
                                     return;
                                 }
-                                double maxPrice = market.getMaxPrice(player, player.getItemInHand());
+                                double maxPrice = market.getMaxPrice(player.getName(), player.getItemInHand());
                                 if (maxPrice > 0 && price > maxPrice) {
                                     packet.getMessage().display(player, ChatColor.RED + locale.get("price_too_high"), ticks);
                                     return;
@@ -448,7 +448,7 @@ public class ListingsInterface extends IMenu {
                                 String world = player.getWorld().getName();
                                 if (toList.size() > 1) {
                                     double pricePer = new BigDecimal(price / amount).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-                                    int tradeTime = market.getTradeTime(player);
+                                    int tradeTime = market.getTradeTime(player.getName());
                                     if (tradeTime > 0) {
                                         storage.queueListing(player.getName(), toList, pricePer, world);
                                         packet.getMessage().display(player, fee > 0 ? ChatColor.GREEN + locale.get("items_queued_with_fee", tradeTime, fee) : ChatColor.GREEN + locale.get("items_queued", tradeTime), ticks);
@@ -460,7 +460,7 @@ public class ListingsInterface extends IMenu {
                                         market.getHistory().storeHistory(player.getName(), "", MarketAction.LISTING_CREATED, toList, price);
                                     }
                                 } else {
-                                    int tradeTime = market.getTradeTime(player);
+                                    int tradeTime = market.getTradeTime(player.getName());
                                     if (tradeTime > 0) {
                                         storage.queueListing(player.getName(), toList.get(0), price, world);
                                         packet.getMessage().display(player, fee > 0 ? ChatColor.GREEN + locale.get("item_queued_with_fee", tradeTime, fee) : ChatColor.GREEN + locale.get("item_queued", tradeTime), ticks);

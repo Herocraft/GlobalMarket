@@ -35,7 +35,7 @@ public class MarketCore {
         String infAccount = market.getInfiniteAccount();
         boolean isInfinite = listing.getSeller().equalsIgnoreCase(market.getInfiniteSeller());
         String buyer = player.getName();
-        double cut = market.getCut(listing.getPrice(), listing.getSellerPlayer(), listing.getWorld());
+        double cut = market.getCut(listing.getPrice(), listing.getSeller(), listing.getWorld());
         if (cut > 0) {
             cutPrice = originalPrice - cut;
         }
@@ -116,7 +116,7 @@ public class MarketCore {
         String seller = listing.getSeller();
         String infAccount = market.getInfiniteAccount();
         boolean isInfinite = listing.getSeller().equalsIgnoreCase(market.getInfiniteSeller());
-        double cut = market.getCut(listing.getPrice(), listing.getSellerPlayer(), listing.getWorld());
+        double cut = market.getCut(listing.getPrice(), listing.getSeller(), listing.getWorld());
         if (cut > 0) {
             cutPrice = originalPrice - cut;
         }

@@ -66,9 +66,9 @@ public class Listing implements IMarketItem, Comparable<Listing> {
         return seller;
     }
 
-    public OfflinePlayer getSellerPlayer(){
+/*    public OfflinePlayer getSellerPlayer(){
         return Market.market.getServer().getOfflinePlayer(seller);
-    }
+    }*/
 
     public double getPrice() {
         return price;

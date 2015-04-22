@@ -107,7 +107,7 @@ public class CreateCommand extends SubCommand {
                 sender.sendMessage(prefix + locale.get("price_too_low"));
                 return true;
             }
-            double maxPrice = market.getMaxPrice(player, player.getItemInHand());
+            double maxPrice = market.getMaxPrice(player.getName(), player.getItemInHand());
             if (maxPrice > 0 && price > maxPrice) {
                 sender.sendMessage(prefix + locale.get("price_too_high"));
                 return true;
@@ -170,7 +170,7 @@ public class CreateCommand extends SubCommand {
                 player.setItemInHand(new ItemStack(Material.AIR));
             }
             String world = player.getWorld().getName();
-            int tradeTime = market.getTradeTime(player);
+            int tradeTime = market.getTradeTime(player.getName());
             if (tradeTime > 0 && !player.hasPermission("globalmarket.noqueue")) {
                 storage.queueListing(infinite ? market.getInfiniteSeller() : player.getName(), toList, price, world);
                 sender.sendMessage(ChatColor.GREEN + locale.get("item_queued", tradeTime));

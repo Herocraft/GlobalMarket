@@ -33,7 +33,7 @@ public class ExpireTask extends BukkitRunnable {
                     return false;
                 }
                 long diff = System.currentTimeMillis() - listing.getTime();
-                int expireTime = market.getExpireTime(listing.getSellerPlayer(), listing.getWorld());
+                int expireTime = market.getExpireTime(listing.getSeller(), listing.getWorld());
                 return expireTime > 0 ? (diff / (60 * 60 * 1000)) >= expireTime : false;
             }
         });
