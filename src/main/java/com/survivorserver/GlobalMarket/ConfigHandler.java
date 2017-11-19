@@ -1,7 +1,8 @@
 package com.survivorserver.GlobalMarket;
 
 import java.io.File;
-import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -57,7 +58,7 @@ public class ConfigHandler {
     public void reloadLocaleYML() {
         localeFile = new File(market.getDataFolder(), "locale.yml");
         localeConfig = YamlConfiguration.loadConfiguration(localeFile);
-        InputStream defaults = market.getResource("locale.yml");
+        Reader defaults = new InputStreamReader(market.getResource("locale.yml"));
         YamlConfiguration def = YamlConfiguration.loadConfiguration(defaults);
         localeConfig.addDefaults(def);
         localeConfig.options().copyDefaults(true);

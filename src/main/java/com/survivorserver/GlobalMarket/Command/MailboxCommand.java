@@ -48,7 +48,7 @@ public class MailboxCommand extends SubCommand {
     public boolean onCommand(CommandSender sender, String[] args) {
         Player player = (Player) sender;
         Location location = null;
-        Block block = player.getTargetBlock((HashSet<Byte>)null, 4);
+        Block block = player.getTargetBlock((HashSet<Material>)null, 4);
         if (block.getType() == Material.CHEST
                 // Trapped chest
                 || block.getTypeId() == 146

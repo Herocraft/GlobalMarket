@@ -77,7 +77,7 @@ public class CauldronHelper {
 
     public static Object getNMSStack(ItemStack item) {
         try {
-            Class c = Class.forName(String.format("org.bukkit.craftbukkit.%s.inventory.CraftItemStack", _package));
+            Class<?> c = Class.forName(String.format("org.bukkit.craftbukkit.%s.inventory.CraftItemStack", _package));
             Method m = c.getMethod("asNMSCopy", ItemStack.class);
             return m.invoke(null, item);
         } catch(Exception e) {
@@ -88,9 +88,9 @@ public class CauldronHelper {
 
     public static Object getNMSInventory(Inventory inv) {
         try {
-            Class c = Class.forName(String.format("org.bukkit.craftbukkit.%s.inventory.CraftInventory", _package));
-            Method m = c.getMethod("getInventory", null);
-            return m.invoke(inv, null);
+            Class<?> c = Class.forName(String.format("org.bukkit.craftbukkit.%s.inventory.CraftInventory", _package));
+            Method m = c.getMethod("getInventory", (Class<?>[]) null);
+            return m.invoke(inv, (Object[]) null);
         } catch(Exception e) {
             e.printStackTrace();
         }
